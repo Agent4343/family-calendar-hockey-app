@@ -76,7 +76,7 @@ export default function HockeyExpensesPage() {
     if (currentPlayer && seasonExpenses.length > 0) {
       actions.calculateExpenseSummary(selectedSeason);
     }
-  }, [currentPlayer, selectedSeason, expenses.length]);
+  }, [currentPlayer, selectedSeason, expenses.length, actions, seasonExpenses.length]);
 
   const handleAddExpense = () => {
     if (!currentPlayer) return;
@@ -642,7 +642,7 @@ export default function HockeyExpensesPage() {
                 <Label>Category</Label>
                 <Select
                   value={expenseForm.category}
-                  onValueChange={(value: any) => setExpenseForm(prev => ({ ...prev, category: value }))}
+                  onValueChange={(value) => setExpenseForm(prev => ({ ...prev, category: value as HockeyExpense['category'] }))}
                 >
                   <SelectTrigger>
                     <SelectValue />
@@ -701,7 +701,7 @@ export default function HockeyExpensesPage() {
                 <Label>Paid By</Label>
                 <Select
                   value={expenseForm.paidBy}
-                  onValueChange={(value: any) => setExpenseForm(prev => ({ ...prev, paidBy: value }))}
+                  onValueChange={(value: string) => setExpenseForm(prev => ({ ...prev, paidBy: value }))}
                 >
                   <SelectTrigger>
                     <SelectValue />
@@ -720,7 +720,7 @@ export default function HockeyExpensesPage() {
                 <Label>Payment Method</Label>
                 <Select
                   value={expenseForm.paymentMethod}
-                  onValueChange={(value: any) => setExpenseForm(prev => ({ ...prev, paymentMethod: value }))}
+                  onValueChange={(value: string) => setExpenseForm(prev => ({ ...prev, paymentMethod: value }))}
                 >
                   <SelectTrigger>
                     <SelectValue />
@@ -763,7 +763,7 @@ export default function HockeyExpensesPage() {
                   <Label>Frequency</Label>
                   <Select
                     value={expenseForm.recurringFrequency}
-                    onValueChange={(value: any) => setExpenseForm(prev => ({ ...prev, recurringFrequency: value }))}
+                    onValueChange={(value: string) => setExpenseForm(prev => ({ ...prev, recurringFrequency: value }))}
                   >
                     <SelectTrigger>
                       <SelectValue />

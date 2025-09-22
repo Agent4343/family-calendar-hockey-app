@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
+
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -21,7 +21,7 @@ interface SMSSettingsProps {
 }
 
 export function SMSSettings({ isOpen, onClose }: SMSSettingsProps) {
-  const { familyMembers, actions } = useCalendarStore();
+  const { familyMembers } = useCalendarStore();
   const { settings, updateSettings, sendTestMessage, getTemplates } = useSMS();
   
   const [localSettings, setLocalSettings] = useState<SMSSettingsType>(settings);
@@ -184,7 +184,7 @@ export function SMSSettings({ isOpen, onClose }: SMSSettingsProps) {
                       <Label>SMS Provider</Label>
                       <Select
                         value={localSettings.provider}
-                        onValueChange={(value: any) => 
+                        onValueChange={(value: string) => 
                           setLocalSettings(prev => ({ ...prev, provider: value }))
                         }
                       >
@@ -221,7 +221,7 @@ export function SMSSettings({ isOpen, onClose }: SMSSettingsProps) {
                               <p className="text-xs font-mono">
                                 <strong>How it works:</strong><br/>
                                 • Verizon: 5551234567@vtext.com<br/>
-                                • AT&T: 5551234567@txt.att.net<br/>
+                                • AT&amp;T: 5551234567@txt.att.net<br/>
                                 • T-Mobile: 5551234567@tmomail.net
                               </p>
                             </div>
@@ -296,7 +296,7 @@ export function SMSSettings({ isOpen, onClose }: SMSSettingsProps) {
                               placeholder="https://your-api.com/send-sms"
                             />
                             <p className="text-xs text-purple-600 dark:text-purple-300 mt-1">
-                              Your endpoint will receive: {'{'}"phoneNumber", "message", "timestamp"{'}'}
+                              Your endpoint will receive: &#123;&quot;phoneNumber&quot;, &quot;message&quot;, &quot;timestamp&quot;&#125;
                             </p>
                           </div>
                         </CardContent>

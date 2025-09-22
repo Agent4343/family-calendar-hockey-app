@@ -6,7 +6,7 @@ import { EventDialog } from '@/components/EventDialog';
 import { MemberSelector } from '@/components/MemberSelector';
 import { MobileNavigation } from '@/components/MobileNavigation';
 import { SMSSettings } from '@/components/SMSSettings';
-import { SMSSettingsDialog } from '@/components/SMSSettingsDialog';
+
 import { useCalendarStore } from '@/lib/calendar-store';
 import { useNotifications } from '@/lib/notification-service';
 import { CalendarEvent, FamilyMember } from '@/types/calendar';

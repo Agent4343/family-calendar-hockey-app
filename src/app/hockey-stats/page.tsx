@@ -94,7 +94,7 @@ export default function HockeyStatsPage() {
     if (currentPlayer && currentPlayerGames.length > 0) {
       actions.calculateSeasonStats(currentPlayer.id, selectedSeason);
     }
-  }, [currentPlayer, selectedSeason, gameStats.length]);
+  }, [currentPlayer, selectedSeason, gameStats.length, actions, currentPlayerGames.length]);
 
   const handleAddGame = () => {
     if (!currentPlayer) return;
@@ -585,7 +585,7 @@ export default function HockeyStatsPage() {
                 <Label>Game Type</Label>
                 <Select
                   value={gameForm.gameType}
-                  onValueChange={(value: any) => setGameForm(prev => ({ ...prev, gameType: value }))}
+                  onValueChange={(value: string) => setGameForm(prev => ({ ...prev, gameType: value }))}
                 >
                   <SelectTrigger>
                     <SelectValue />
@@ -602,7 +602,7 @@ export default function HockeyStatsPage() {
                 <Label>Location</Label>
                 <Select
                   value={gameForm.location}
-                  onValueChange={(value: any) => setGameForm(prev => ({ ...prev, location: value }))}
+                  onValueChange={(value: string) => setGameForm(prev => ({ ...prev, location: value }))}
                 >
                   <SelectTrigger>
                     <SelectValue />
@@ -766,7 +766,7 @@ export default function HockeyStatsPage() {
                 <Label>Position</Label>
                 <Select
                   value={playerForm.position}
-                  onValueChange={(value: any) => setPlayerForm(prev => ({ ...prev, position: value }))}
+                  onValueChange={(value: string) => setPlayerForm(prev => ({ ...prev, position: value }))}
                 >
                   <SelectTrigger>
                     <SelectValue />

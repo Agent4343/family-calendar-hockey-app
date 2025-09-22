@@ -135,7 +135,7 @@ class CalendarStore {
     }
   }
 
-  private setToStorage(key: string, value: CalendarEvent[] | FamilyMember[] | string): void {
+  private setToStorage(key: string, value: CalendarEvent[] | FamilyMember[] | string | boolean): void {
     if (typeof window === 'undefined') return;
     
     try {
@@ -146,7 +146,7 @@ class CalendarStore {
   }
 
   // Event serialization helpers
-  private deserializeEvents(events: CalendarEvent[]): CalendarEvent[] {
+  private deserializeEvents(events: Record<string, unknown>[]): CalendarEvent[] {
     return events.map(event => ({
       ...event,
       startDate: new Date(event.startDate),

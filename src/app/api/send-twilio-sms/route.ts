@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
-    const { to, from, body, accountSid, authToken } = await request.json();
+    const { to, from, body } = await request.json();
 
     if (!to || !from || !body || !accountSid || !authToken) {
       return NextResponse.json({
