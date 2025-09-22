@@ -297,7 +297,7 @@ class NotificationService {
   }
 
   // Handle notification click actions (for service worker)
-  handleNotificationAction(action: string, data: any): void {
+  handleNotificationAction(action: string, data: unknown): void {
     switch (action) {
       case 'view':
         // Navigate to event view

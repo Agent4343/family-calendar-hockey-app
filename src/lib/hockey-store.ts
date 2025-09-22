@@ -3,7 +3,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { HockeyPlayer, GameStats, SeasonStats, HockeyExpense, ExpenseSummary, Tournament, HockeyMilestone } from '@/types/hockey';
-import { addDays, format, startOfYear, endOfYear } from 'date-fns';
+import { format } from 'date-fns';
 
 interface HockeyStore {
   // Players

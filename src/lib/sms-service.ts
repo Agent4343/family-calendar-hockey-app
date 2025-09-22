@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { CalendarEvent, FamilyMember, ReminderSetting } from '@/types/calendar';
+import { CalendarEvent, ReminderSetting } from '@/types/calendar';
 
 export interface SMSSettings {
   isEnabled: boolean;
