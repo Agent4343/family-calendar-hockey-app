@@ -1,0 +1,91 @@
+{
+  "name": "Family Calendar - Hockey Management",
+  "short_name": "Family Calendar",
+  "description": "Complete family calendar with AAA hockey stats and expense tracking",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["lifestyle", "productivity", "sports"],
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon-512x512.png", 
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180", 
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Add Event",
+      "short_name": "Add Event",
+      "description": "Quickly add a new family event",
+      "url": "/?action=add-event",
+      "icons": [
+        {
+          "src": "/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Hockey Stats",
+      "short_name": "Hockey",
+      "description": "Track hockey statistics", 
+      "url": "/hockey-stats",
+      "icons": [
+        {
+          "src": "/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Expenses",
+      "short_name": "Expenses", 
+      "description": "Track hockey expenses",
+      "url": "/hockey-expenses",
+      "icons": [
+        {
+          "src": "/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Family Calendar Dashboard"
+    },
+    {
+      "src": "/screenshot-narrow.png", 
+      "sizes": "720x1280",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Mobile Calendar View"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  }
+}
