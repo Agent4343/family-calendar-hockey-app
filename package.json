@@ -1,11 +1,14 @@
 {
-  "name": "my-app",
-  "version": "0.1.0",
+  "name": "family-calendar-hockey-app",
+  "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
   "scripts": {
     "dev": "PORT=3000 next dev",
     "build": "next build --no-lint",
-    "build:lint": "next build",
     "start": "next start",
     "lint": "next lint"
   },
