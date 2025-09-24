@@ -1,58 +1,40 @@
 {
-  "buildCommand": "pnpm run build --no-lint",
-  "devCommand": "pnpm run dev",
-  "installCommand": "pnpm install",
+  "buildCommand": "npm run build",
   "framework": "nextjs",
-  "regions": ["iad1"],
-  "functions": {
-    "src/app/api/send-email-sms/route.ts": {
-      "maxDuration": 30
-    },
-    "src/app/api/send-twilio-sms/route.ts": {
-      "maxDuration": 30
-    }
+  "installCommand": "npm install --legacy-peer-deps --no-audit --no-fund --timeout=600000",
+  "nodeVersion": "18.x",
+  "outputDirectory": ".next",
+  "env": {
+    "NODE_ENV": "production",
+    "NEXT_TELEMETRY_DISABLED": "1"
   },
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
         {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "origin-when-cross-origin"
+          "key": "X-Forwarded-Proto",
+          "value": "https"
         }
       ]
+    }
+  ],
+  "functions": [
+    {
+      "source": "src/app/api/**/*.ts",
+      "maxDuration": 10
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/hockey-stats",
+      "destination": "/hockey-stats",
+      "permanent": true
     },
     {
-      "source": "/api/(.*)",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
-        },
-        {
-          "key": "Access-Control-Allow-Methods",
-          "value": "GET, POST, OPTIONS"
-        },
-        {
-          "key": "Access-Control-Allow-Headers",
-          "value": "Content-Type, Authorization"
-        }
-      ]
+      "source": "/hockey-expenses",
+      "destination": "/hockey-expenses",
+      "permanent": true
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/sw.js",
-      "destination": "/_next/static/sw.js"
-    }
-  ],
-  "crons": []
+  ]
 }
