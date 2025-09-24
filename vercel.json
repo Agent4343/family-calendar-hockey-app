@@ -2,7 +2,6 @@
   "buildCommand": "npm run build",
   "framework": "nextjs",
   "installCommand": "npm install --legacy-peer-deps --no-audit --no-fund --timeout=600000",
-  "nodeVersion": "18.x",
   "outputDirectory": ".next",
   "env": {
     "NODE_ENV": "production",
@@ -18,23 +17,11 @@
         }
       ]
     }
-  ],
+  },
   "functions": [
     {
       "source": "src/app/api/**/*.ts",
       "maxDuration": 10
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/hockey-stats",
-      "destination": "/hockey-stats",
-      "permanent": true
-    },
-    {
-      "source": "/hockey-expenses",
-      "destination": "/hockey-expenses",
-      "permanent": true
     }
   ]
 }
