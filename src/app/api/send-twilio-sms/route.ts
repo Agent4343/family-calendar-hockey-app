@@ -1,141 +1,97 @@
-// API endpoint for Twilio SMS
-// Professional SMS service with high delivery rates
-
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
-    const { to, from, body } = await request.json();
+    const { to, from, body, accountSid, authToken } = await request.json();
 
+    // Validate input
     if (!to || !from || !body || !accountSid || !authToken) {
-      return NextResponse.json({
-        success: false,
-        error: 'Missing required parameters'
-      }, { status: 400 });
+      return NextResponse.json(
+        { error: 'Missing required fields: to, from, body, accountSid, authToken' },
+        { status: 400 }
+      );
     }
 
-    console.log('Twilio SMS Request:', {
-      to: to,
-      from: from,
-      bodyLength: body.length,
-      timestamp: new Date().toISOString()
+    // Twilio API integration
+    const twilioUrl = `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`;
+    
+    const formData = new URLSearchParams();
+    formData.append('To', to);
+    formData.append('From', from);
+    formData.append('Body', body);
+
+    const response = await fetch(twilioUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': `Basic ${Buffer.from(`${accountSid}:${authToken}`).toString('base64')}`
+      },
+      body: formData
     });
 
-    // This is a placeholder implementation
-    // In a real app, you would use the Twilio SDK
-    const smsSent = await sendViaTwilio(to, from, body, accountSid, authToken);
-
-    if (smsSent.success) {
+    if (response.ok) {
+      const data = await response.json();
       return NextResponse.json({
         success: true,
         message: 'SMS sent via Twilio',
-        messageId: smsSent.messageId,
-        method: 'twilio'
+        messageId: data.sid,
+        to,
+        from,
+        sentAt: data.date_created
       });
     } else {
-      return NextResponse.json({
-        success: false,
-        error: smsSent.error
-      }, { status: 500 });
+      const errorData = await response.json();
+      return NextResponse.json(
+        { 
+          error: 'Twilio API error', 
+          details: errorData.message || 'Unknown error',
+          code: errorData.code
+        },
+        { status: response.status }
+      );
     }
 
   } catch (error) {
-    console.error('Twilio SMS API Error:', error);
-    return NextResponse.json({
-      success: false,
-      error: 'Internal server error'
-    }, { status: 500 });
+    console.error('Twilio SMS error:', error);
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
-// Placeholder function - replace with actual Twilio SDK
-async function sendViaTwilio(
-  to: string, 
-  from: string, 
-  body: string, 
-  accountSid: string, 
-  authToken: string
-): Promise<{ success: boolean; messageId?: string; error?: string }> {
-  try {
-    // Example integration with Twilio SDK:
-    /*
-    const twilio = require('twilio');
-    const client = twilio(accountSid, authToken);
-
-    const message = await client.messages.create({
-      to: to,
-      from: from,
-      body: body
-    });
-
-    return {
-      success: true,
-      messageId: message.sid
-    };
-    */
-
-    // For demo purposes, we'll simulate the API call
-    // Remove this in production and implement actual Twilio integration
-    console.log(`[DEMO] Would send Twilio SMS to ${to} from ${from}: ${body}`);
-    
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    // Simulate successful response
-    return {
-      success: true,
-      messageId: `SM${Date.now().toString(36).toUpperCase()}`
-    };
-
-  } catch (error) {
-    console.error('Twilio sending failed:', error);
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : 'Unknown error'
-    };
-  }
+// Get Twilio setup instructions
+export async function GET() {
+  return NextResponse.json({
+    instructions: {
+      title: 'Twilio SMS Setup',
+      description: 'Professional SMS service with delivery confirmation',
+      steps: [
+        '1. Create a Twilio account at https://twilio.com',
+        '2. Verify your phone number',
+        '3. Get your Account SID and Auth Token from the console',
+        '4. Purchase a Twilio phone number (+$1/month)',
+        '5. Enter credentials in the SMS settings',
+        '6. Test with your family members'
+      ],
+      pricing: {
+        setup: 'Free account + phone number ($1/month)',
+        messaging: '$0.0075 per SMS sent',
+        example: '100 messages/month = ~$0.75 + $1 phone = $1.75/month'
+      },
+      features: [
+        '✅ Delivery confirmation',
+        '✅ Works with all carriers',
+        '✅ Fast delivery (usually < 10 seconds)',
+        '✅ No carrier knowledge required',
+        '✅ Professional service',
+        '✅ Global SMS support'
+      ],
+      environment: {
+        'TWILIO_ACCOUNT_SID': 'Your Account SID',
+        'TWILIO_AUTH_TOKEN': 'Your Auth Token',
+        'TWILIO_PHONE_NUMBER': 'Your Twilio number (+1234567890)'
+      }
+    }
+  });
 }
-
-// Instructions for setting up Twilio SMS:
-/*
-SETUP INSTRUCTIONS:
-
-1. Create Twilio Account:
-   - Sign up at https://www.twilio.com
-   - Get Account SID and Auth Token from console
-   - Buy a phone number for sending SMS
-
-2. Install Twilio SDK:
-   npm install twilio
-
-3. Set environment variables in .env.local:
-   TWILIO_ACCOUNT_SID=your-account-sid
-   TWILIO_AUTH_TOKEN=your-auth-token  
-   TWILIO_PHONE_NUMBER=your-twilio-number
-
-4. Pricing (as of 2024):
-   - SMS: ~$0.0075 per message in US
-   - Phone number: ~$1 per month
-   - Very reliable delivery rates
-
-5. Features:
-   - Delivery receipts
-   - International SMS
-   - MMS support
-   - Two-way messaging
-   - Analytics and logs
-
-Example .env.local file:
-TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-TWILIO_AUTH_TOKEN=your-auth-token-here
-TWILIO_PHONE_NUMBER=+1234567890
-
-Example usage in production:
-const client = require('twilio')(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
-
-const message = await client.messages.create({
-  to: '+15551234567',
-  from: process.env.TWILIO_PHONE_NUMBER,
-  body: 'Your family calendar reminder!'
-});
-*/
